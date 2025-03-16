@@ -16,8 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from . import views  # Import views from the project folder
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('littleLemon.urls')),  # Include littlelemon URLs
+    path('', include('littleLemon.urls')),  # Include app-level URLs
 ]
+
+# Custom 404 handler
+handler404 = 'chefsTable.views.handler404'
