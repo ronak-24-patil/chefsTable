@@ -1,31 +1,31 @@
 from django.http import HttpResponse
-from datetime import datetime  # Import datetime module
 
-def say_hello(request):
-    return HttpResponse("Hello, Welcome to Little Lemon!")
+def home(request):
+    # Accessing request attributes
+    path = request.path
+    scheme = request.scheme
+    method = request.method
+    address = request.META['REMOTE_ADDR']
+    user_agent = request.META['HTTP_USER_AGENT']
 
-def homepage(request):
-    return HttpResponse("Welcome to the Little Lemon Restaurant")
-
-def display_date(request):
-    date_joined = datetime.now().year  # Get the current year
-    return HttpResponse(f"The current year is {date_joined}")
-
-def menu(request):
-    html_content = """
+    # Creating an HTML response
+    message = f"""
     <html>
-    <head>
-        <title>Little Lemon Menu</title>
-        <style>
-            body { font-family: Arial, sans-serif; }
-            h1 { color: green; }
-            p { font-size: 18px; }
-        </style>
-    </head>
+    <head><title>Request Info</title></head>
     <body>
-        <h1>Little Lemon Menu</h1>
-        <p>Explore our delicious Mediterranean dishes.</p>
+        <h1>Request Details</h1>
+        <p><strong>Path:</strong> {path}</p>
+        <p><strong>Scheme:</strong> {scheme}</p>
+        <p><strong>Method:</strong> {method}</p>
+        <p><strong>IP Address:</strong> {address}</p>
+        <p><strong>User Agent:</strong> {user_agent}</p>
     </body>
     </html>
     """
-    return HttpResponse(html_content)
+
+    response = HttpResponse(message, content_type="text/html", charset="utf-8")
+    
+    # Adding custom headers
+    response.headers['Age'] = 20
+    
+    return response

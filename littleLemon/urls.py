@@ -1,9 +1,6 @@
 from django.urls import path
-from . import views  # Import views
+from . import views
 
 urlpatterns = [
-    path('', views.homepage, name='homepage'),  # Root URL
-    path('say-hello/', views.say_hello, name='say_hello'),
-    path('display-date/', views.display_date, name='display_date'),
-    path('menu/', views.menu, name='menu'),
+    path('home/', views.home, name='home'),  # URL for the request-response demo
 ]
