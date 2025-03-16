@@ -1,31 +1,15 @@
 from django.http import HttpResponse
 
-def home(request):
-    # Accessing request attributes
-    path = request.path
-    scheme = request.scheme
-    method = request.method
-    address = request.META['REMOTE_ADDR']
-    user_agent = request.META['HTTP_USER_AGENT']
+def menu_items(request, dish):
+    # Dictionary of dishes and their descriptions
+    items = {
+        'pasta': 'A delicious Italian dish made with noodles and sauce.',
+        'falafel': 'A crispy deep-fried ball made from ground chickpeas.',
+        'cheesecake': 'A sweet dessert consisting of a creamy cheese filling on a biscuit base.'
+    }
 
-    # Creating an HTML response
-    message = f"""
-    <html>
-    <head><title>Request Info</title></head>
-    <body>
-        <h1>Request Details</h1>
-        <p><strong>Path:</strong> {path}</p>
-        <p><strong>Scheme:</strong> {scheme}</p>
-        <p><strong>Method:</strong> {method}</p>
-        <p><strong>IP Address:</strong> {address}</p>
-        <p><strong>User Agent:</strong> {user_agent}</p>
-    </body>
-    </html>
-    """
+    # Get the description of the requested dish, or show "Item not found"
+    description = items.get(dish, "Item not found!")
 
-    response = HttpResponse(message, content_type="text/html", charset="utf-8")
-    
-    # Adding custom headers
-    response.headers['Age'] = 20
-    
-    return response
+    # Return an HTTP response with the dish name and description
+    return HttpResponse(f"<h1>{dish.capitalize()}</h1><p>{description}</p>")
